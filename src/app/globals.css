@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FCFCFC; /* Soft off-white */
+  --foreground: #1A1A1A; /* Deep charcoal */
+  --accent: #B8860B; /* Metallic dark goldenrod for earth-toned accents */
+  --accent-light: #D4AF37; /* Metallic gold */
+  --muted: #F0F0F0;
+  --muted-foreground: #666666;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
+  --font-sans: var(--font-inter), sans-serif;
+  --font-heading: var(--font-outfit), sans-serif;
+
+  --ease-cinematic: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-smooth: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #111111; /* Deep charcoal */
+    --foreground: #F8F9FA; /* Soft off-white */
+    --accent: #D4AF37; /* Metallic gold */
+    --accent-light: #F3E5AB; /* Light gold/vanilla */
+    --muted: #2A2A2A;
+    --muted-foreground: #A0A0A0;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
