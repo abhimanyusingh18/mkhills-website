@@ -48,7 +48,7 @@ export function Hero() {
                     alt="Premium 2tymes Cakes and Confections"
                     fill
                     priority
-                    className="object-cover"
+                    className="object-cover object-[15%_center] md:object-center"
                     sizes="100vw"
                 />
                 {/* Dark elegant gradient overlay */}
