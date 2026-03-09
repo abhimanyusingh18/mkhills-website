@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MapPin, Phone, Mail, Instagram, Globe, Building2, User, FileText } from "lucide-react";
@@ -11,6 +11,8 @@ export default function ContactPage() {
     const [mobileError, setMobileError] = useState("");
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     const validateMobile = (val: string) => {
         if (!val) return "";
@@ -24,19 +26,92 @@ export default function ContactPage() {
         return "";
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         const mErr = validateMobile(mobile);
         const eErr = validateEmail(email);
 
         if (mErr || eErr) {
-            e.preventDefault();
             setMobileError(mErr);
             setEmailError(eErr);
+            return;
+        }
+
+        setIsSubmitting(true);
+        const formData = new FormData(e.currentTarget);
+
+        try {
+            const response = await fetch("https://formsubmit.co/ajax/mkhillsfood@gmail.com", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                setIsSuccess(true);
+                setMobile("");
+                setEmail("");
+                (e.target as HTMLFormElement).reset();
+            } else {
+                alert("Something went wrong. Please try again.");
+            }
+        } catch (error) {
+            alert("Network error. Please try again.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     return (
         <main className="min-h-screen flex flex-col bg-white dark:bg-zinc-950">
+            <AnimatePresence>
+                {isSuccess && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-900/40 backdrop-blur-sm"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.8, opacity: 0, y: 20 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                            className="bg-white dark:bg-zinc-900 rounded-3xl p-8 max-w-sm w-full shadow-2xl border border-zinc-100 dark:border-zinc-800 text-center relative overflow-hidden"
+                        >
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-emerald-500/20 rounded-full blur-3xl -z-10" />
+                            <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ delay: 0.2, type: "spring", damping: 20, stiffness: 200 }}
+                                className="w-24 h-24 bg-emerald-100 dark:bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6"
+                            >
+                                <svg className="w-12 h-12 text-emerald-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <motion.path
+                                        initial={{ pathLength: 0 }}
+                                        animate={{ pathLength: 1 }}
+                                        transition={{ delay: 0.5, duration: 0.5, ease: "easeOut" }}
+                                        d="M5 13L9 17L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
+                                    />
+                                </svg>
+                            </motion.div>
+
+                            <h3 className="text-2xl font-heading font-bold text-zinc-900 dark:text-white mb-2">Response Sent!</h3>
+                            <p className="text-zinc-500 dark:text-zinc-400 mb-8 text-sm">Thank you for reaching out. We've received your inquiry and our team will get back to you shortly.</p>
+
+                            <button
+                                onClick={() => setIsSuccess(false)}
+                                className="w-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white font-medium py-3.5 rounded-xl transition-all active:scale-[0.98]"
+                            >
+                                Done
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <Navbar />
 
             <div className="flex-1 bg-zinc-50 dark:bg-zinc-950 pt-32 pb-24 relative overflow-hidden transition-colors">
@@ -182,10 +257,11 @@ export default function ContactPage() {
                                 <h3 className="text-2xl font-heading font-bold mb-2 text-zinc-900 dark:text-white">Send an Inquiry</h3>
                                 <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-8">Fill out the form below and we'll get back to you immediately.</p>
 
-                                <form action="https://formsubmit.co/mkhillsfood@gmail.com" method="POST" className="space-y-5" onSubmit={handleSubmit}>
+                                <form className="space-y-5" onSubmit={handleSubmit}>
                                     <input type="hidden" name="_subject" value="New Submission from MK Hills Website!" />
                                     <input type="hidden" name="_captcha" value="false" />
-                                    <input type="hidden" name="_template" value="box" />
+                                    <input type="hidden" name="_template" value="table" />
+                                    <input type="hidden" name="_autoresponse" value="Thank you for reaching out to MK Hills Food! We have received your inquiry and our team will get back to you as soon as possible. Our representatives will be in touch shortly. Best Regards, The MK Hills Team" />
 
                                     <div className="space-y-1.5">
                                         <label htmlFor="name" className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 ml-1">Your Name</label>
@@ -249,9 +325,18 @@ export default function ContactPage() {
 
                                     <button
                                         type="submit"
-                                        className="w-full bg-zinc-900 hover:bg-black text-white font-medium py-4 rounded-xl transition-all shadow-md hover:shadow-lg mt-4 active:scale-[0.98]"
+                                        disabled={isSubmitting}
+                                        className="w-full bg-zinc-900 hover:bg-black text-white font-medium py-4 rounded-xl transition-all shadow-md hover:shadow-lg mt-4 active:scale-[0.98] disabled:opacity-70 disabled:pointer-events-none flex items-center justify-center gap-2"
                                     >
-                                        Submit Request
+                                        {isSubmitting ? (
+                                            <>
+                                                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                </svg>
+                                                Submitting...
+                                            </>
+                                        ) : "Submit Request"}
                                     </button>
                                 </form>
                             </div>
