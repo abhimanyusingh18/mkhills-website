@@ -200,13 +200,11 @@ export default function ContactPage() {
                                 </div>
                                 <div className="space-y-4">
                                     <div className="pb-4 border-b border-zinc-100 dark:border-zinc-800">
-                                        <h4 className="font-medium text-zinc-900 dark:text-white">Mohit Bansal</h4>
                                         <a href="tel:7099075538" className="text-emerald-600 hover:text-emerald-700 font-medium transition-colors flex items-center gap-2 mt-1">
                                             <Phone size={14} /> 7099075538
                                         </a>
                                     </div>
                                     <div>
-                                        <h4 className="font-medium text-zinc-900 dark:text-white">Anil Bansal</h4>
                                         <a href="tel:7399064403" className="text-emerald-600 hover:text-emerald-700 font-medium transition-colors flex items-center gap-2 mt-1">
                                             <Phone size={14} /> 7399064403
                                         </a>
