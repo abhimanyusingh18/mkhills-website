@@ -77,8 +77,8 @@ export function Footer() {
                             <li className="flex items-center gap-4">
                                 <Phone className="text-accent shrink-0" size={20} />
                                 <div>
-                                    <a href="tel:7002647183" className="hover:text-accent transition-colors block">7002647183</a>
-                                    <a href="tel:8811916892" className="hover:text-accent transition-colors block">8811916892</a>
+                                    <a href="tel:7099075538" className="hover:text-accent transition-colors block">7099075538</a>
+                                    <a href="tel:7399064403" className="hover:text-accent transition-colors block">7399064403</a>
                                 </div>
                             </li>
                         </ul>
