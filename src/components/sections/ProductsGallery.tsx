@@ -8,7 +8,6 @@ const products = [
     { id: 2, name: "Cup Cakes Collection", category: "Donuts", image: "/images/products/page_2_img_1.jpeg" },
     { id: 3, name: "Lovify Heart Shape Cakes", category: "Cakes", image: "/images/products/page_4_img_1.jpeg" },
     { id: 4, name: "Finger Cakes", category: "Cakes", image: "/images/products/page_6_img_1.jpeg" },
-#    { id: 5, name: "Slice Cakes Collection", category: "Cakes", image: "/images/products/page_5_img_1.jpeg" },
     { id: 5, name: "Slice Cakes Collection", category: "Exclusive", image: "/images/products/extra_product.jpeg" },
     { id: 6, name: "Premium Gift Pack Cookies", category: "Cookies", image: "/images/products/page_7_img_1_cropped.jpeg" },
     { id: 7, name: "Premium Gift Pack Cookies", category: "Cookies", image: "/images/products/page_8_img_1_cropped.jpeg" },
