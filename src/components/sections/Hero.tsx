@@ -45,7 +45,7 @@ export function Hero() {
             <motion.div style={{ y, opacity }} className="absolute inset-0 w-full h-[120%] -top-[10%] z-0">
                 <Image
                     src="/images/bigHomePage.png"
-                    alt="Premium 2tymes Cakes and Confections"
+                    alt="Premium 2tymes Cakes"
                     fill
                     priority
                     className="object-cover object-[15%_center] md:object-center"

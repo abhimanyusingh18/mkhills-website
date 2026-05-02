@@ -15,7 +15,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "MK Hills | 2tymes Bakery & Confections",
+  title: "MK Hills | Cakes and Bakery products",
   description: "Premium packaged cakes, cookies, and donuts by MK Hills Food under the brand name 2tymes.",
 };
 
